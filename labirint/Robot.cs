@@ -16,7 +16,7 @@ namespace labirint
         int Taskcounter = 0;
         int[,] Track; // локальная карта робота места где он ходил. надо слиять с глобальной картой что бы остальных орентировать.
 
-        void SetPoz(RealMap realMap) // Инициализация робота 
+       public void SetPoz(RealMap realMap, int i) // Инициализация робота 
         {
             locasion[0] = realMap.GetStart()[0];
             locasion[1] = realMap.GetStart()[1];
@@ -26,28 +26,26 @@ namespace labirint
             if (realMap.Look(locasion[0] - 1, locasion[0]) == 0) { lastlocasion[0] = locasion[0] - 1; }
             if (realMap.Look(locasion[1] + 1, locasion[1]) == 0) { lastlocasion[1] = locasion[1] + 1; }
             if (realMap.Look(locasion[1] - 1, locasion[1]) == 0) { lastlocasion[1] = locasion[1] + 1; }
+
+            nom = i;
+
             /*
              *Робот появляется в тупике
              * 
              */
         }
 
-
-        /*
-        void MoweX (int x)  //  1 такт 1 ход принимает только +-1
+       
+        public void Mowe (int x, int y)  //  1 такт 1 ход принимает только +-1
         {
+            lastlocasion = locasion;
             locasion[0] = locasion[0] + x;
-            TrackUpd();
-        }
-
-        void MoweY(int y)  //  1 такт 1 ход принимает только +-1
-        {
             locasion[1] = locasion[1] + y;
             TrackUpd();
         }
-*/  // движение по командам вверх вниз возможно понадобятся (скорее всего нужны) для старта квеста, пускаем по дороге далее он исследует Explove.
+  // движение по командам вверх вниз возможно понадобятся (скорее всего нужны) для старта квеста, пускаем по дороге далее он исследует Explove.
 
-        void Explove(RealMap realMap)  // исследование смотрит на карту определяет квадраты +-1 от себя действует.
+        public void Explove(RealMap realMap)  // исследование смотрит на карту определяет квадраты +-1 от себя действует.
         {
             lookaround(realMap);
             //тупик
@@ -154,6 +152,7 @@ namespace labirint
             //перекресток
             if (Crosstupe >= 3)
             {
+                COOPAI.WereIm(nom); // доработать 
                 // он попал в перекресток, два варианта 
                 // он закончил исследование
                 // он шляется в поисках квеста
@@ -188,6 +187,26 @@ namespace labirint
 
         Track[locasion[0], locasion[1]] = 1;  
          // Track[locasion[0], locasion[1]] += 1; //учитывает повторный проход
+        }
+
+        public int[] Locasion()
+        {
+            return locasion;
+        }
+
+        public int[,] GetTrack()
+        {
+            return Track;
+        }
+
+        public bool Status()
+        {
+            return stat;
+        }
+
+        public void SetActive()
+        {
+            stat = false;
         }
     }
 
