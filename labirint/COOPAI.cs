@@ -13,7 +13,7 @@ namespace labirint
         List<int[]> Cross = new List<int[]>(); // перекрестки
         List<int> CrossTask = new List<int>(); // Количество квестов на перекрестке
         List<int> CrossWayUnk = new List<int>(); // направления неисследованных дорог надо думать как задать иначе 24 варианта
-        void StartAI(int N, RealMap realMap)
+       public void StartAI(int N, RealMap realMap)
         {
             robots = new Robot[N];  // узнали сколько роботов
             for (int i=0;i<N; i++){    robots[i] = new Robot();  } // создали роботов

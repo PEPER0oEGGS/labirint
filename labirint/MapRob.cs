@@ -8,7 +8,7 @@ namespace labirint
 {
     public class MapRob
     {// карта построеная роботами = граф - перекресток/связь(длинна)/
-
+/*
         public List <Cross> Crosstreat = new List<Cross>(); // известные перекрестки
 
         public void Mapadd(Cross cross)
@@ -25,7 +25,7 @@ namespace labirint
         {
             return Crosstreat(1);
         }
-
+        */
     }
    public class Cross //Перекресток
     {
