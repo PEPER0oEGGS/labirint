@@ -71,9 +71,36 @@ namespace labirint
 
         void ReadMap()
         {
+            string k = MapInput.Text;
+            char[,] map;
+            int i=0;
+            char lol;
+            bool mark=true;
+            for (;mark;)
+            {
+                if (k[i] != '\r'){
+                    lol = k[i];
+                    i++;
+                    
+                }
+                else { mark = false; }
+            }
 
-           // map.load();
+            map = new char[i, k.Length / (i + 2)];
+            for (i = 0; i < map.Length;)
+            {
+                map[i, 1] = k[i];
 
+            }
+
+
+
+
+
+
+            // map.load();
+            //char
+            if (k[9] == '2') { k+="2"; }
         }
     }
 }
