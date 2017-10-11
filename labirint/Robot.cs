@@ -14,8 +14,8 @@ namespace labirint
         int[] lastlocasion = new int[2]; // прошлое положение
         int Crosstupe; // 1 - тупик 2 - дорога 3 - перекресток.
         int Taskcounter = 0;
+        int roadway = 0;// направления дорог
         int[,] Track; // локальная карта робота места где он ходил. надо слиять с глобальной картой что бы остальных орентировать.
-
        public void SetPoz(RealMap realMap, int i) // Инициализация робота 
         {
             locasion[0] = realMap.GetStart()[0];
@@ -34,7 +34,6 @@ namespace labirint
              * 
              */
         }
-
        
         public void Mowe (int x, int y)  //  1 такт 1 ход принимает только +-1
         {
@@ -43,9 +42,9 @@ namespace labirint
             locasion[1] = locasion[1] + y;
             TrackUpd();
         }
-  // движение по командам вверх вниз возможно понадобятся (скорее всего нужны) для старта квеста, пускаем по дороге далее он исследует Explove.
+  // движение по командам вверх вниз  нужны для старта квеста, пускаем по дороге далее он исследует Explove.
 
-        public void Explove(RealMap realMap)  // исследование смотрит на карту определяет квадраты +-1 от себя действует.
+        public int Explove(RealMap realMap)  // исследование смотрит на карту определяет квадраты +-1 от себя действует.
         {
             lookaround(realMap);
             //тупик
@@ -57,11 +56,13 @@ namespace labirint
                 save = locasion[1];
                 locasion[1] = lastlocasion[1];
                 lastlocasion[1] = save;
+                TrackUpd();
+                return 0;
             }
             // дорога
             if (Crosstupe == 2) // если на дороге определить куда она идет.
             {
-                switch (lookaround(realMap))
+                switch (roadway)
                 {
                     case 11: //верх низ
                         if (locasion[0] - 1 == lastlocasion[0])
@@ -147,39 +148,43 @@ namespace labirint
                         Console.Write("Error");
                         break;
                 }
-
+                TrackUpd();
+                return 0;
             }
             //перекресток
             if (Crosstupe >= 3)
             {
-                //COOPAI.WereIm(nom); // доработать 
-                // он попал в перекресток, два варианта 
-                // он закончил исследование
-                // он шляется в поисках квеста
-                // при шляется в поисках квеста надо вести его к следующему перекрестку с квестами 
+
+                /* 
+                 * он попал в перекресток, два варианта 
+                 *он закончил исследование
+                 *он шляется в поисках квеста
+                 *при шляется в поисках квеста надо вести его к следующему перекрестку с квестами  
+                */
+
                 if (!stat)
                 {
                     stat = true; // исследование закончено 
                     Taskcounter++;
                     //передача трека для создания общей карты навигации. (100% узнал новую дорогу)
                 }
-                // запрашивает путь к следующему заданию управление через муве Х У (функции в комменте)
+                TrackUpd();
+                return roadway;
+                // запрашивает путь к следующему заданию управление через муве Х У (функции в комменте)    
             }
-            TrackUpd();
+            Console.WriteLine("Error Explove");
+            return 0;
         }
 
-        int lookaround(RealMap realMap) // определяет где он и куда может пойти
+        public void lookaround(RealMap realMap) // определяет где он и куда может пойти
         {
-            int WaysCount = 0;
-            int roadway=0;
-            if (realMap.Look(locasion[0] + 1, locasion[0]) == 0) { WaysCount++; roadway += 1; } //вверх
-            if (realMap.Look(locasion[0] - 1, locasion[0]) == 0) { WaysCount++; roadway += 10; } //вниз
-            if (realMap.Look(locasion[1] + 1, locasion[1]) == 0) { WaysCount++; roadway += 100; } //вправо
-            if (realMap.Look(locasion[1] - 1, locasion[1]) == 0) { WaysCount++; roadway += 1000; } //влево
-            if (WaysCount == 3) { WaysCount = 4; }
-            Crosstupe = WaysCount;
-
-            return roadway;
+            int Crosstupe = 1;
+            roadway = 0;
+            if (realMap.Look(locasion[0] + 1, locasion[0]) == 0) { Crosstupe++; roadway += 1; } //вверх
+            if (realMap.Look(locasion[0] - 1, locasion[0]) == 0) { Crosstupe++; roadway += 10; } //вниз
+            if (realMap.Look(locasion[1] + 1, locasion[1]) == 0) { Crosstupe++; roadway += 100; } //вправо
+            if (realMap.Look(locasion[1] - 1, locasion[1]) == 0) { Crosstupe++; roadway += 1000; } //влево
+            
         }
     
         void TrackUpd() // запись трека для определения того где был робот (не учитывает повторный проход)
@@ -189,24 +194,38 @@ namespace labirint
          // Track[locasion[0], locasion[1]] += 1; //учитывает повторный проход
         }
 
-        public int[] Locasion()
+        public int[] Locasion() // Передает где он
         {
             return locasion;
+        }
+
+        public int LastStep() // передает как туда пришел
+        {
+            if (lastlocasion[0] - locasion[0] ==-1) { return (2); } //снизу
+            if (lastlocasion[0] - locasion[0] == 1) { return (1); } //сверху
+            if (lastlocasion[1] - locasion[1] ==-1) { return (4); } //влево
+            if (lastlocasion[1] - locasion[1] == 1) { return (3); } //вправо
+            return (-1);
         }
 
         public int[,] GetTrack()
         {
             return Track;
-        }
+        } // передает трек
 
         public bool Status()
         {
             return stat;
-        }
+        } // передает наличие задачи
 
         public void SetActive()
         {
             stat = false;
+        } // получает задачу
+
+        public int Roadway() // направления дорог в пространстве
+        {
+            return roadway;
         }
     }
 
