@@ -468,17 +468,20 @@ namespace labirint
         }
 
 
-        public void loop (RealMap realMap)
+        public void Loop (RealMap realMap)
         {
-            for (int i=0;i<robots.Length ; i++)
-            {  
-               if(robots[i].Explove(realMap)!= 0)
-                {
-                    NewCross(i);
 
-                }
-            }
+
+
+
 
         }
+
+        public int[,] MAP()
+        {
+            return localMap;
+        }
+
+
     }
 }

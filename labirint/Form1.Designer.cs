@@ -34,8 +34,11 @@
             this.LoadMap = new System.Windows.Forms.Button();
             this.MapInput = new System.Windows.Forms.TextBox();
             this.NoLOadMap = new System.Windows.Forms.Button();
-            this.infoLabel = new System.Windows.Forms.Label();
-            this.InpRobMap = new System.Windows.Forms.TextBox();
+            this.Robots = new System.Windows.Forms.Label();
+            this.Rob = new System.Windows.Forms.TextBox();
+            this.X = new System.Windows.Forms.TextBox();
+            this.Y = new System.Windows.Forms.TextBox();
+            this.Location = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Grafon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,30 +102,60 @@
             this.NoLOadMap.Visible = false;
             this.NoLOadMap.Click += new System.EventHandler(this.NoLOadMap_Click);
             // 
-            // infoLabel
+            // Robots
             // 
-            this.infoLabel.AutoSize = true;
-            this.infoLabel.Location = new System.Drawing.Point(27, 349);
-            this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(110, 13);
-            this.infoLabel.TabIndex = 6;
-            this.infoLabel.Text = "Количество роботов";
+            this.Robots.AutoSize = true;
+            this.Robots.Location = new System.Drawing.Point(27, 349);
+            this.Robots.Name = "Robots";
+            this.Robots.Size = new System.Drawing.Size(110, 13);
+            this.Robots.TabIndex = 6;
+            this.Robots.Text = "Количество роботов";
             // 
-            // InpRobMap
+            // InpRob
             // 
-            this.InpRobMap.Location = new System.Drawing.Point(143, 346);
-            this.InpRobMap.Name = "InpRobMap";
-            this.InpRobMap.Size = new System.Drawing.Size(252, 20);
-            this.InpRobMap.TabIndex = 7;
-            this.InpRobMap.Visible = false;
+            this.Rob.Location = new System.Drawing.Point(143, 346);
+            this.Rob.Name = "InpRob";
+            this.Rob.Size = new System.Drawing.Size(252, 20);
+            this.Rob.TabIndex = 7;
+            // 
+            // X
+            // 
+            this.X.Location = new System.Drawing.Point(162, 373);
+            this.X.Name = "X";
+            this.X.Size = new System.Drawing.Size(83, 20);
+            this.X.TabIndex = 8;
+            this.X.Text = "X";
+            this.X.Visible = false;
+            // 
+            // Y
+            // 
+            this.Y.Location = new System.Drawing.Point(270, 373);
+            this.Y.Name = "Y";
+            this.Y.Size = new System.Drawing.Size(83, 20);
+            this.Y.TabIndex = 9;
+            this.Y.Text = "Y";
+            this.Y.Visible = false;
+            // 
+            // Location
+            // 
+            this.Location.AutoSize = true;
+            this.Location.Location = new System.Drawing.Point(27, 376);
+            this.Location.Name = "Location";
+            this.Location.Size = new System.Drawing.Size(117, 13);
+            this.Location.TabIndex = 10;
+            this.Location.Text = "Точка старта (тупик) :";
+            this.Location.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 395);
-            this.Controls.Add(this.InpRobMap);
-            this.Controls.Add(this.infoLabel);
+            this.ClientSize = new System.Drawing.Size(713, 402);
+            this.Controls.Add(this.Location);
+            this.Controls.Add(this.Y);
+            this.Controls.Add(this.X);
+            this.Controls.Add(this.Rob);
+            this.Controls.Add(this.Robots);
             this.Controls.Add(this.NoLOadMap);
             this.Controls.Add(this.MapInput);
             this.Controls.Add(this.LoadMap);
@@ -145,8 +178,11 @@
         private System.Windows.Forms.Button LoadMap;
         private System.Windows.Forms.TextBox MapInput;
         private System.Windows.Forms.Button NoLOadMap;
-        private System.Windows.Forms.Label infoLabel;
-        private System.Windows.Forms.TextBox InpRobMap;
+        private System.Windows.Forms.Label Robots;
+        private System.Windows.Forms.TextBox Rob;
+        private System.Windows.Forms.TextBox X;
+        private System.Windows.Forms.TextBox Y;
+        private System.Windows.Forms.Label Location;
     }
 }
 

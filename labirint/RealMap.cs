@@ -13,8 +13,8 @@ namespace labirint
         public void load(int[,] newMap,int x, int y) //загрузка карты 
         {
             map = newMap;
-            start[0] = x;
-            start[1] = y;
+            start[0] = x-1;
+            start[1] = y-1;
         }
 
         public int GetXSize() //получить размер по х
