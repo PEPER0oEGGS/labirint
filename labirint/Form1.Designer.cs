@@ -44,14 +44,18 @@
             // 
             // Grafon
             // 
+            this.Grafon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Grafon.Location = new System.Drawing.Point(12, 12);
             this.Grafon.Name = "Grafon";
-            this.Grafon.Size = new System.Drawing.Size(689, 320);
+            this.Grafon.Size = new System.Drawing.Size(688, 320);
             this.Grafon.TabIndex = 0;
             this.Grafon.TabStop = false;
             // 
             // StartEm
             // 
+            this.StartEm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartEm.Location = new System.Drawing.Point(563, 338);
             this.StartEm.Name = "StartEm";
             this.StartEm.Size = new System.Drawing.Size(138, 48);
@@ -62,6 +66,7 @@
             // 
             // MapShose
             // 
+            this.MapShose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.MapShose.Location = new System.Drawing.Point(419, 338);
             this.MapShose.Name = "MapShose";
             this.MapShose.Size = new System.Drawing.Size(138, 48);
@@ -72,7 +77,8 @@
             // 
             // LoadMap
             // 
-            this.LoadMap.Location = new System.Drawing.Point(419, 338);
+            this.LoadMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.LoadMap.Location = new System.Drawing.Point(418, 338);
             this.LoadMap.Name = "LoadMap";
             this.LoadMap.Size = new System.Drawing.Size(138, 48);
             this.LoadMap.TabIndex = 3;
@@ -83,17 +89,21 @@
             // 
             // MapInput
             // 
-            this.MapInput.Location = new System.Drawing.Point(12, 12);
+            this.MapInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MapInput.Location = new System.Drawing.Point(13, 12);
             this.MapInput.Multiline = true;
             this.MapInput.Name = "MapInput";
-            this.MapInput.Size = new System.Drawing.Size(689, 320);
+            this.MapInput.Size = new System.Drawing.Size(688, 320);
             this.MapInput.TabIndex = 4;
             this.MapInput.Text = "Введите карту";
             this.MapInput.Visible = false;
             // 
             // NoLOadMap
             // 
-            this.NoLOadMap.Location = new System.Drawing.Point(563, 338);
+            this.NoLOadMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.NoLOadMap.Location = new System.Drawing.Point(562, 338);
             this.NoLOadMap.Name = "NoLOadMap";
             this.NoLOadMap.Size = new System.Drawing.Size(138, 48);
             this.NoLOadMap.TabIndex = 5;
@@ -104,6 +114,7 @@
             // 
             // Robots
             // 
+            this.Robots.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Robots.AutoSize = true;
             this.Robots.Location = new System.Drawing.Point(27, 349);
             this.Robots.Name = "Robots";
@@ -111,15 +122,18 @@
             this.Robots.TabIndex = 6;
             this.Robots.Text = "Количество роботов";
             // 
-            // InpRob
+            // Rob
             // 
+            this.Rob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Rob.Location = new System.Drawing.Point(143, 346);
-            this.Rob.Name = "InpRob";
+            this.Rob.Name = "Rob";
             this.Rob.Size = new System.Drawing.Size(252, 20);
             this.Rob.TabIndex = 7;
             // 
             // X
             // 
+            this.X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.X.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.X.Location = new System.Drawing.Point(162, 373);
             this.X.Name = "X";
             this.X.Size = new System.Drawing.Size(83, 20);
@@ -129,6 +143,7 @@
             // 
             // Y
             // 
+            this.Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Y.Location = new System.Drawing.Point(270, 373);
             this.Y.Name = "Y";
             this.Y.Size = new System.Drawing.Size(83, 20);
@@ -138,6 +153,7 @@
             // 
             // Location
             // 
+            this.Location.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Location.AutoSize = true;
             this.Location.Location = new System.Drawing.Point(27, 376);
             this.Location.Name = "Location";
@@ -150,7 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 402);
+            this.ClientSize = new System.Drawing.Size(712, 402);
             this.Controls.Add(this.Location);
             this.Controls.Add(this.Y);
             this.Controls.Add(this.X);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace labirint
 {
-    class RealMap
+    public class RealMap
     {
         int[,] map; // карта и ее размер.
         int[] start = new int[2];
@@ -28,8 +28,8 @@ namespace labirint
         }
 
         public int Look(int x, int y)//получить размер по x
-        {
-            return map[x, y];
+        { int k = map[y, x];
+            return k;
         }
         public int[] GetStart() //получить размер по х
         {

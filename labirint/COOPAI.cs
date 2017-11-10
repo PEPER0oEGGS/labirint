@@ -6,170 +6,19 @@ using System.Threading.Tasks;
 
 namespace labirint
 {
-    class COOPAI
+    public class COOPAI // не умеет искать квесты (WhatWay)
     {
-        Robot[] robots;
-        int[,] localMap;
-        List<int[]> Cross = new List<int[]>(); // перекрестки
-        List<int> CrossTask = new List<int>(); // Количество квестов на перекрестке
-        List<int> CrossWayUnk = new List<int>(); // направления неисследованных дорог
+        public Robot[] robots;
+       public int[,] localMap;
+        int[,] WayMap;
+        public int takts = 0;
+        List<int> CrossX = new List<int>(1000); // перекрестки 
+        List<int> CrossY = new List<int>(1000); // перекрестки 
+        List<int> CrossTask = new List<int>(1000); // Количество квестов на перекрестке
+        List<int> CrossWayUnk = new List<int>(1000); // направления неисследованных дорог
+
         /*
-         * 1 вверх
-         * 2 вниз
-         * 3 вправо
-         * 4 влево
-         * 5 вверх вниз
-         * 6 вверх влево
-         * 7 вверх вправо
-         * 8 вниз влево
-         * 9 вниз вправо
-         * 10 влево вправо
-         * 11 не верх
-         * 12 не низ
-         * 13 не лево
-         * 14 не право
-         * 
-         */ 
-
-      
-       public void StartAI(int N, RealMap realMap)
-        {
-            robots = new Robot[N];  // узнали сколько роботов
-            for (int i=0;i<N; i++){    robots[i] = new Robot();  } // создали роботов
-            for (int i = 0; i < N; i++)  { robots[i].SetPoz(realMap, i); } // инициализировали роботов
-            localMap = robots[0].GetTrack();// получили размер карты
-            // теперь надо одного пустить в лабиринт а остальных заставить ждать ( они заедут в нутрь в первый перекресток и будут ждать команд)
-            robots[0].SetActive();
-        }
-
-       public void WereIm(int n)
-        {
-            //перекресток с роботом
-            int[] start = robots[n].Locasion();
-            int k = Cross.IndexOf(start);
-            if (CrossTask[k] != 0) // робот в перекрестке с квестом
-            {
-                robots[n].SetActive();
-                // послать его в неизведанную часть мы не знаем куда из перекрестка ехать
-                switch (CrossWayUnk[k])
-                {
-                    case 14:
-                        robots[n].Mowe(0,-1);
-                        CrossWayUnk[k] = 5;
-                        CrossTask[k]--;
-
-                        break;
-
-                    case 13:
-                        robots[n].Mowe(0, 1);
-                        CrossWayUnk[k] = 5;
-                        CrossTask[k]--;
-                        break;
-                    case 12:
-                        robots[n].Mowe(1,0);
-                        CrossWayUnk[k] = 10;
-                        CrossTask[k]--;
-                        break;
-                    case 11:
-                        robots[n].Mowe(-1, 0);
-                        CrossWayUnk[k] = 10;
-                        CrossTask[k]--;
-                        break;
-                    case 10:
-                        robots[n].Mowe(0, 1);
-                        CrossWayUnk[k] = 4;
-                        CrossTask[k]--;
-                        break;
-                    case 9:
-                        robots[n].Mowe(0,1);
-                        CrossWayUnk[k] = 2;
-                        CrossTask[k]--;
-                        break;
-                    case 8:
-                        robots[n].Mowe(0,-1);
-                        CrossWayUnk[k] = 2;
-                        CrossTask[k]--;
-                        break;
-                    case 7:
-                        robots[n].Mowe(0, 1);
-                        CrossWayUnk[k] = 1;
-                        CrossTask[k]--;
-                        break;
-                    case 6:
-                        robots[n].Mowe(0, -1);
-                        CrossWayUnk[k] = 1;
-                        CrossTask[k]--;
-                        break;
-                    case 5:
-                        robots[n].Mowe(1, 0);
-                        CrossWayUnk[k] = 2;
-                        CrossTask[k]--;
-                        break;
-                    case 4:
-                        robots[n].Mowe(0, 1);
-                        CrossTask[k]--;
-                        break;
-                    case 3:
-                        robots[n].Mowe(0, 1);
-                        CrossTask[k]--;
-                        break;
-                    case 2:
-                        robots[n].Mowe(-1, 0);
-                        CrossTask[k]--;
-                        break;
-                    case 1:
-                        robots[n].Mowe(1,0);
-                        CrossTask[k]--;
-                        break;
-                    default:
-                        Console.Write("Error WereIm");
-                        break;
-                }
-            }
-            k = CrossTask.IndexOf(3);
-            if (k == 0) { k = CrossTask.IndexOf(2);}
-            if (k == 0) { k = CrossTask.IndexOf(1); }
-            if (k != 0) // робот гдето и ищет перекресток с максимальным количеством квестов
-            {
-                int[] finich = Cross.ElementAt(k);
-                switch (WhatWay(start, finich)) // значение куда повернуть из перекрестка
-                {
-                    case 1:
-                        robots[n].Mowe(1,0);
-
-                        break;
-                    case 2:
-                        robots[n].Mowe(-1, 0);
-
-                        break;
-                    case 3:
-                        robots[n].Mowe(0, 1);
-
-                        break;
-                    case 4:
-                        robots[n].Mowe(0, -1);
-
-                        break;
-                    default:
-                        Console.Write("Error WereIm 2");
-                        break;
-                }
-
-            }
-        }
-
-       int WhatWay(int[] start, int[] finich)
-        {
-            //достаем карту и ищем путь из старта в финиш и возвращаем куда поверуть с перекрестка 1 2 3 4 = верх низ право лево
-
-            return 0;
-        }
-
-        void NewCross(int n)
-        {
-            if (!Cross.Contains(robots[n].Locasion()))
-            {  
-        /*
+         * 0 все исследованно
          * 1 вверх
          * 2 вниз
          * 3 вправо
@@ -186,7 +35,164 @@ namespace labirint
          * 14 не право
          * 
          */
-                Cross.Add(robots[n].Locasion());
+
+
+        public void StartAI(int N, RealMap realMap)
+        {
+            robots = new Robot[N];  // узнали сколько роботов
+            for (int i = 0; i < N; i++) { robots[i] = new Robot(); } // создали роботов
+            for (int i = 0; i < N; i++) { robots[i].SetPoz(realMap, i); } // инициализировали роботов
+            localMap = new int[robots[0].GetTrack().GetLength(0), robots[0].GetTrack().GetLength(1)]; localMap = new int[robots[0].GetTrack().GetLength(0), robots[0].GetTrack().GetLength(1)];// получили размер карты
+            WayMap = new int[robots[0].GetTrack().GetLength(0), robots[0].GetTrack().GetLength(1)];
+            // теперь надо одного пустить в лабиринт а остальных заставить ждать ( они заедут в нутрь в первый перекресток и будут ждать команд)
+            robots[0].SetActive();
+        }
+
+        public void WereIm(int n)
+        {
+            int k = 0;
+            for (; true; k++) { if (CrossX[k] == robots[n].Locasion()[0] && CrossY[k] == robots[n].Locasion()[1]) { break; } }
+            if (CrossTask[k] != 0) // робот в перекрестке с квестом
+            {// послать его в неизведанную часть мы не знаем куда из перекрестка ехать
+                robots[n].SetActive();
+                switch (CrossWayUnk[k])
+                {
+                    case 14:
+                        robots[n].Mowe(0, -1);
+                        CrossWayUnk[k] = 5;
+                        CrossTask[k]--;
+                        break;
+                    case 13:
+                        robots[n].Mowe(0, 1);
+                        CrossWayUnk[k] = 5;
+                        CrossTask[k]--;
+                        break;
+                    case 12:
+                        robots[n].Mowe(-1, 0);
+                        CrossWayUnk[k] = 10;
+                        CrossTask[k]--;
+                        break;
+                    case 11:
+                        robots[n].Mowe(1, 0);
+                        CrossWayUnk[k] = 10;
+                        CrossTask[k]--;
+                        break;
+                    case 10:
+                        robots[n].Mowe(0, 1);
+                        CrossWayUnk[k] = 4;
+                        CrossTask[k]--;
+                        break;
+                    case 9:
+                        robots[n].Mowe(0, 1);
+                        CrossWayUnk[k] = 2;
+                        CrossTask[k]--;
+                        break;
+                    case 8:
+                        robots[n].Mowe(0, -1);
+                        CrossWayUnk[k] = 2;
+                        CrossTask[k]--;
+                        break;
+                    case 7:
+                        robots[n].Mowe(0, 1);
+                        CrossWayUnk[k] = 1;
+                        CrossTask[k]--;
+                        break;
+                    case 6:
+                        robots[n].Mowe(0, -1);
+                        CrossWayUnk[k] = 1;
+                        CrossTask[k]--;
+                        break;
+                    case 5:
+                        robots[n].Mowe(-1, 0);
+                        CrossWayUnk[k] = 2;
+                        CrossTask[k]--;
+                        break;
+                    case 4:
+                        robots[n].Mowe(0, -1);
+                        CrossTask[k]--;
+                        CrossWayUnk[k] = 0;
+                        break;
+                    case 3:
+                        robots[n].Mowe(0, 1);
+                        CrossWayUnk[k] = 0;
+                        CrossTask[k]--;
+                        break;
+                    case 2:
+                        robots[n].Mowe(1, 0);
+                        CrossWayUnk[k] = 0;
+                        CrossTask[k]--;
+                        break;
+                    case 1:
+                        robots[n].Mowe(-1, 0);
+                        CrossWayUnk[k] = 0;
+                        CrossTask[k]--;
+                        break;
+                    default:
+                        Console.Write("Error WereIm");
+                        break;
+                }
+            }
+            else
+            {
+               /* switch (robots[n].LastStep())
+                {
+                    case 1: // вверх = лево или прямо
+                        if (robots[n].Roadway() == 0111) { robots[n].Mowe(1, 0); } else { robots[n].Mowe(0, -1); }
+                        break;
+                    case 2: // вниз = право или прямо
+                        if (robots[n].Roadway() == 1011) { robots[n].Mowe(-1, 0); } else { robots[n].Mowe(0, 1); }
+                        break;
+                    case 3: // право вверх или прямо
+                        if (robots[n].Roadway() == 1101) { robots[n].Mowe(0, -1); } else { robots[n].Mowe(-1, 0); }
+                        break;
+                    case 4: //  влево или прямо
+                        if (robots[n].Roadway() == 1110) { robots[n].Mowe(0, 1); } else { robots[n].Mowe(1, 0); }
+                        break;
+                }*/
+
+
+                
+                // робот гдето и ищет перекресток с максимальным количеством квестов
+                 k = CrossTask.IndexOf(3);
+                 if (k == -1) { k = CrossTask.IndexOf(2);}
+                 if (k == -1) { k = CrossTask.IndexOf(1); }
+                 if (k != -1) // если квесты на карте есть
+                 {
+                   // int[] finich =Cross.ElementAt(k);
+                     switch (Whatway(new int[] { CrossX.ElementAt(k), CrossY.ElementAt(k) }, robots[n].Locasion())) // значение куда повернуть из перекрестка
+                     {
+                        case 1: //вниз
+                        robots[n].Mowe(1,0);
+
+                        break;
+                       case 2://вверх
+                        robots[n].Mowe(-1, 0);
+
+                        break;
+                        case 3://вправо
+                        robots[n].Mowe(0, 1);
+
+                        break;
+                       case 4: // влево
+                        robots[n].Mowe(0, -1);
+
+                        break;
+                       default:
+                        Console.Write("Error WereIm 2");
+                        break;
+                     }
+
+                 }// тут если трек будет равен пути (вторая функция) надо уменьшать трек при ппростое
+                 
+            }
+        }
+
+        void NewCross(int n)
+        {
+            if (!CrossX.Contains(robots[n].Locasion()[0]) || !CrossY.Contains(robots[n].Locasion()[1]))
+            {
+                CrossX.Add(robots[n].Locasion()[0]);
+                CrossY.Add(robots[n].Locasion()[1]);
                 switch (robots[n].LastStep())
                 {
                     case 1: // верх 11 10 9 8
@@ -196,7 +202,7 @@ namespace labirint
                                 CrossTask.Add(3);
                                 CrossWayUnk.Add(11);
                                 break;
-                            case 1101: // 3 дороги не низ
+                            case 1110: // 3 дороги не низ
                                 CrossTask.Add(2);
                                 CrossWayUnk.Add(10);
                                 break;
@@ -220,9 +226,9 @@ namespace labirint
                                 CrossTask.Add(3);
                                 CrossWayUnk.Add(12);
                                 break;
-                            case 1110: // 3 дороги не верх
+                            case 1101: // 3 дороги не верх
                                 CrossTask.Add(2);
-                                CrossWayUnk.Add(5);
+                                CrossWayUnk.Add(10);
                                 break;
                             case 1011: // 3 дороги не право
                                 CrossTask.Add(2);
@@ -244,17 +250,17 @@ namespace labirint
                                 CrossTask.Add(3);
                                 CrossWayUnk.Add(14);
                                 break;
-                            case 1110: // 3 дороги не верх
+                            case 1101: // 3 дороги не верх
                                 CrossTask.Add(2);
                                 CrossWayUnk.Add(7);
                                 break;
-                            case 1101: // 3 дороги не низ
+                            case 1110: // 3 дороги не низ
                                 CrossTask.Add(2);
                                 CrossWayUnk.Add(6);
                                 break;
                             case 0111: // 3 дороги не лево
                                 CrossTask.Add(2);
-                                CrossWayUnk.Add(10);
+                                CrossWayUnk.Add(5);
                                 break;
                             default:
                                 Console.Write("Error  NewCross");
@@ -268,11 +274,11 @@ namespace labirint
                                 CrossTask.Add(3);
                                 CrossWayUnk.Add(11);
                                 break;
-                            case 1110: // 3 дороги не верх
+                            case 1101: // 3 дороги не верх
                                 CrossTask.Add(2);
                                 CrossWayUnk.Add(9);
                                 break;
-                            case 1101: // 3 дороги не низ
+                            case 1110: // 3 дороги не низ
                                 CrossTask.Add(2);
                                 CrossWayUnk.Add(7);
                                 break;
@@ -289,20 +295,18 @@ namespace labirint
                         Console.Write("Error  NewCross");
                         break;
                 }
-
-                }
+            }
             else {
-                int k = Cross.IndexOf(robots[n].Locasion());
-              
-
+                int k = 0;
+                for (; true; k++) { if (CrossX[k] == robots[n].Locasion()[0] && CrossY[k] == robots[n].Locasion()[1]) { break; } }
                 switch (robots[n].LastStep())
                 {
-                    case 1: // верх 10 9 8 4 3 2 ( уточняем 1 5 6 7 12 13 14)
+                    case 2: // верх 10 9 8 4 3 2 ( уточняем 1 5 6 7 12 13 14)
                         switch (CrossWayUnk[k])
                         {
-                            case 1:
+                            case 2:
                                 CrossTask[k]--;
-                                // cbvvtnhbz xnj, ukfp yt htpfkj
+                                CrossWayUnk[k] = 0;
                                 break;
                             case 5:
                                 CrossTask[k]--;
@@ -322,23 +326,22 @@ namespace labirint
                                 break;
                             case 13:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 9;
                                 break;
                             case 14:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 8;
                                 break;
                             default:
                                 break;
-                        } 
- 
+                        }
                         break;
-                    case 2: // низ 10 7 6 4 3 1 ( уточняем 2 5 8 9 11 13 14)
-                        switch (CrossWayUnk[k]) 
+                    case 1: // низ 10 7 6 4 3 1 ( уточняем 2 5 8 9 11 13 14)
+                        switch (CrossWayUnk[k])
                         {
-                            case 2:
+                            case 1:
                                 CrossTask[k]--;
-                                // cbvvtnhbz xnj, ukfp yt htpfkj
+                                CrossWayUnk[k] = 0;
                                 break;
                             case 5:
                                 CrossTask[k]--;
@@ -358,23 +361,22 @@ namespace labirint
                                 break;
                             case 13:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 7;
                                 break;
                             case 14:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 6;
                                 break;
                             default:
                                 break;
                         }
-
                         break;
                     case 3: // право 1 2 4 5 6 8  ( уточняем 3 7 9 10 11 12 13)
                         switch (CrossWayUnk[k])
                         {
                             case 3:
                                 CrossTask[k]--;
-                                // cbvvtnhbz xnj, ukfp yt htpfkj
+                                CrossWayUnk[k] = 0;
                                 break;
                             case 7:
                                 CrossTask[k]--;
@@ -390,11 +392,11 @@ namespace labirint
                                 break;
                             case 11:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 10;
+                                CrossWayUnk[k] = 8;
                                 break;
                             case 12:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 6;
                                 break;
                             case 13:
                                 CrossTask[k]--;
@@ -403,14 +405,13 @@ namespace labirint
                             default:
                                 break;
                         }
-
                         break;
                     case 4: // лево 1 2 3 5 7 9 ( уточняем 4 6 8 10 11 12 14)
                         switch (CrossWayUnk[k])
                         {
                             case 4:
                                 CrossTask[k]--;
-                                // cbvvtnhbz xnj, ukfp yt htpfkj
+                                CrossWayUnk[k] = 0;
                                 break;
                             case 6:
                                 CrossTask[k]--;
@@ -426,11 +427,11 @@ namespace labirint
                                 break;
                             case 11:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 10;
+                                CrossWayUnk[k] = 9;
                                 break;
                             case 12:
                                 CrossTask[k]--;
-                                CrossWayUnk[k] = 5;
+                                CrossWayUnk[k] = 7;
                                 break;
                             case 14:
                                 CrossTask[k]--;
@@ -439,49 +440,106 @@ namespace labirint
                             default:
                                 break;
                         }
-
                         break;
-                    
+
                     default:
                         Console.Write("Error  NewCross");
                         break;
                 }
-                if (CrossWayUnk[k] == 14 && robots[n].LastStep() !=4 ){
-                    CrossTask[k]--;
-                }
-                if (CrossWayUnk[k] == 13 && robots[n].LastStep() != 3){
-                    CrossTask[k]--;
-                }
-                if (CrossWayUnk[k] == 12 && robots[n].LastStep() != 1){
-                    CrossTask[k]--;
-                }
-                if (CrossWayUnk[k] == 11 && robots[n].LastStep() != 2){
-                    CrossTask[k]--;
-                }
-                //перезаполнить списки с количеством задач и направлений.
             }
         }
 
-        void NewCrossTupe(int n)
+        public void Loop(RealMap realMap)
         {
+            takts++;
+            for (int n = 0; n < robots.Length; n++)
+            {
 
+                if (robots[n].Explove(realMap) != 0)
+                {
+                    NewCross(n);
+                    WereIm(n);
+                }
+                
+                UpdMap(n);
+
+            }
         }
 
-
-        public void Loop (RealMap realMap)
+        void UpdMap(int n)
         {
-
-
-
-
-
-        }
+            localMap[robots[n].Locasion()[1], robots[n].Locasion()[0]]++;
+            if (CrossTask.Count == 0) { localMap[robots[n].Locasion()[1], robots[n].Locasion()[0]]=1; }
+        } 
 
         public int[,] MAP()
         {
             return localMap;
+        } 
+
+        public bool stopmark()
+        {
+            int k = CrossTask.IndexOf(3);
+            if (k == -1) { k = CrossTask.IndexOf(2); }
+            if (k == -1) { k = CrossTask.IndexOf(1); }
+            if (k == -1)
+            {
+                for (k = 0; k < robots.Length; k++)
+                {
+                    if (!robots[k].Status()) { return true; }
+                }
+                return false;
+            }
+            return true;
+
+        } 
+
+        int Whatway(int[] cross, int[] robot) {
+            int[] road = new int[4];
+
+            for(int i=0, j=0; i < localMap.GetLength(0);) {
+                WayMap[i, j] = localMap[i, j];
+                j++;
+                if (j == localMap.GetLength(1)){ i++;j = 0; }
+            }
+            if (WayMap[robot[1]+1, robot[0]] != 0) { WayMap[robot[1], robot[0]] = 0; robot[1] = robot[1] + 1; road[0] = WhatwayREC(cross, robot); robot[1] = robot[1] - 1; }
+            if (WayMap[robot[1]-1, robot[0]] != 0) { WayMap[robot[1], robot[0]] = 0; robot[1] = robot[1] - 1; road[1] = WhatwayREC(cross, robot); robot[1] = robot[1] + 1; }
+            if (WayMap[robot[1], robot[0]+1] != 0) { WayMap[robot[1], robot[0]] = 0; robot[0] = robot[0] + 1; road[2] = WhatwayREC(cross, robot); robot[0] = robot[0] - 1; }
+            if (WayMap[robot[1], robot[0]-1] != 0) { WayMap[robot[1], robot[0]] = 0; robot[0] = robot[0] - 1; road[3] = WhatwayREC(cross, robot); robot[0] = robot[0] + 1; }
+            int mem = 10000000;
+            if (road[0] != 0) { mem = 3; }
+            if (road[1] != 0) { if (road[1] < road[0]|| road[0] == 0) { mem = 4; road[0] = road[1]; } }
+            if (road[2] != 0) { if (road[2] < road[0]|| road[0] == 0) { mem = 1; road[0] = road[2]; } }
+            if (road[3] != 0) { if (road[3] < road[0]|| road[0] == 0) { mem = 2; road[0] = road[3]; } }
+
+            return (mem);
+            }
+        int WhatwayREC(int[] cross, int[] robot)
+        {
+            if (robot[0] == cross[0] && robot[1] == cross[1]) { return (1); }
+            int[] road = new int[4];
+            if (WayMap[robot[1] + 1, robot[0]] != 0) { WayMap[robot[1], robot[0]] = 0; robot[1] = robot[1] + 1; road[0] = + WhatwayREC(cross, robot); robot[1] = robot[1] - 1; } 
+            if (WayMap[robot[1] - 1, robot[0]] != 0) { WayMap[robot[1], robot[0]] = 0; robot[1] = robot[1] - 1; road[1] = + WhatwayREC(cross, robot); robot[1] = robot[1] + 1; }
+            if (WayMap[robot[1], robot[0] + 1] != 0) { WayMap[robot[1], robot[0]] = 0; robot[0] = robot[0] + 1; road[2] = + WhatwayREC(cross, robot); robot[0] = robot[0] - 1; }
+            if (WayMap[robot[1], robot[0] - 1] != 0) { WayMap[robot[1], robot[0]] = 0; robot[0] = robot[0] - 1; road[3] = + WhatwayREC(cross, robot); robot[0] = robot[0] + 1; }
+
+            if (road[1] != 0) { if (road[1] < road[0] || road[0] == 0) road[0] = road[1]; }
+            if (road[2] != 0) { if (road[2] < road[0] || road[0] == 0) road[0] = road[2]; }
+            if (road[3] != 0) { if (road[3] < road[0] || road[0] == 0) road[0] = road[3]; }
+
+            if (road[0] != 0) { return (road[0]+1); }
+                return (0);
         }
 
 
+
+
+
+
     }
+
+
+
+
+
 }
